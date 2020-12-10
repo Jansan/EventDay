@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EventDay.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +30,10 @@ namespace EventDay
         {
             services.AddControllers();
 
-            services.AddDbContext<EventDayContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString
-                ("EventContext")));
+            services.AddDbContext<EventDayContext>(opt => opt.UseSqlServer
+            (Configuration.GetConnectionString("EventContext")));
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
