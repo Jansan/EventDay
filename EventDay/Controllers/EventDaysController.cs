@@ -35,7 +35,7 @@ namespace EventDay.Controllers
 
         [HttpGet]
         [Route("{name}")]
-        public async Task<ActionResult<EventDayDto>> GetEvent(string name,bool includeLectures = false)
+        public async Task<ActionResult<EventDayDto>> GetEvent(string name, bool includeLectures = false)
         {
 
             var result = await repo.GetEventAsync(name, includeLectures);
@@ -53,6 +53,27 @@ namespace EventDay.Controllers
 
             var searchResult = await repo.GetAllEvensByDateAsync(eventDate, includeLectures);
             return Ok(mapper.Map<EventDayDto[]>(searchResult));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<EventDayDto>>> CreateEvent(EventDayDto dto)
+        {
+            if (await repo.GetEventAsync(dto.Name, false) != null)
+            {
+                ModelState.AddModelError("Name", "Name in use");
+                return BadRequest(ModelState);
+            }
+
+            var eventday = mapper.Map<Models.Entities.EventDay>(dto);
+            await repo.AddAsync(eventday);
+
+            if (await repo.SaveAsync())
+            {
+                var model = mapper.Map<EventDayDto>(eventday);
+                return CreatedAtAction(nameof(GetEvent), new { name = model.Name }, model);
+            }
+            return BadRequest();
+
         }
 
 

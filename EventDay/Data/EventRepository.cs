@@ -10,6 +10,7 @@ namespace EventDay.Data
     {
         private readonly EventDayContext db;
 
+        
 
         public EventRepository(EventDayContext db)
         {
@@ -61,6 +62,16 @@ namespace EventDay.Data
             }
 
             return await query.Where(e => e.EventDate.Equals(eventDate)).ToArrayAsync();
+        }
+
+        public async Task AddAsync<T>(T added)
+        {
+            await db.AddAsync(added);
+        }
+
+        public async Task<bool> SaveAsync()
+        {
+            return (await db.SaveChangesAsync()) >= 0;
         }
     }
 }
