@@ -18,7 +18,9 @@ namespace EventDay.Data
 
         public async Task<IEnumerable<EventDay.Models.Entities.EventDay>> GetAllEvents()
         {
-            return await db.EventDays.ToListAsync();
+            return await db.EventDays
+                .Include(e => e.Location)
+                .ToListAsync();
 
         }
     }

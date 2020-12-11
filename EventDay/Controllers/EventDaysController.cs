@@ -15,7 +15,7 @@ namespace EventDay.Controllers
     public class EventDaysController : ControllerBase
     {
         private readonly IMapper mapper;
-        private EventRepository repo;
+        private readonly EventRepository repo;
 
         public EventDaysController(EventDayContext context, IMapper mapper)
         {
