@@ -9,7 +9,8 @@ namespace EventDay.Models.Entities
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        private string name;
+        public string Name { get => name; set => name = value.ToUpper(); }
         public DateTime EventDate { get; set; }
         public int Length { get; set; }
         public int LocationId { get; set; }
