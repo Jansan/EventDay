@@ -21,15 +21,25 @@ namespace EventDay.Controllers
         {
             repo = new EventRepository(context);
             this.mapper = mapper;
-            
+
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EventDayDto>>> GetAllEvents()
         {
-            var result = await repo.GetAllEvents();
-            var mappedResult = mapper.Map<IEnumerable<EventDayDto>>(result);
-            return Ok(mappedResult);
+            try
+            {
+                throw new Exception();
+                var result = await repo.GetAllEvents();
+                var mappedResult = mapper.Map<IEnumerable<EventDayDto>>(result);
+                return Ok(mappedResult);
+
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(500, e.Message);
+            }
         }
 
 
