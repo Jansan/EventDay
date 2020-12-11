@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventDay.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace EventDay.Data
     {
         public MapperProfile()
         {
-            
+            CreateMap<Models.Entities.EventDay, EventDayDto>().ReverseMap();
         }
     }
 }
